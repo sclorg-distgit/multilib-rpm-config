@@ -4,7 +4,6 @@
 # While we are in package playing with packaging principles, why about having
 # this solved in redhat-rpm-config too?  (Also for RHELs which are alive, or
 # EPELs otherwise).
-%{!?_licensedir:%global license %doc}
 
 # https://fedoraproject.org/wiki/Packaging:Guidelines#Packaging_of_Additional_RPM_Macros
 %global macrosdir       %(d=%{_rpmconfigdir}/macros.d; [ -d $d ] || d=%{_sysconfdir}/rpm; echo $d)
@@ -14,7 +13,7 @@
 Summary: Multilib packaging helpers
 Name: %{?scl_prefix}multilib-rpm-config
 Version: 1
-Release: 7%{?dist}
+Release: 8%{?dist}
 License: GPLv2+
 URL: https://fedoraproject.org/wiki/PackagingDrafts/MultilibTricks
 
@@ -31,6 +30,8 @@ BuildArch: noarch
 
 # Most probably we want to move everything here?
 Requires: redhat-rpm-config
+
+%{!?_licensedir:%global license %doc}
 
 %description
 Set of tools (shell scripts, RPM macro files) to help with multilib packaging
@@ -117,6 +118,9 @@ test `$capable --arch ppc64p7` = true
 %{macrosdir}/*
 
 %changelog
+* Fri Jul 15 2016 Honza Horak <hhorak@redhat.com> - 1-8
+- Move license macro definition after License tag
+
 * Fri Jul 15 2016 Honza Horak <hhorak@redhat.com> - 1-7
 - Convert to SCL package
 
