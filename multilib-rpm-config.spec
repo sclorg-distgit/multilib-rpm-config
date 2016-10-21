@@ -6,14 +6,14 @@
 # EPELs otherwise).
 
 # https://fedoraproject.org/wiki/Packaging:Guidelines#Packaging_of_Additional_RPM_Macros
-%global macrosdir       %(d=%{_rpmconfigdir}/macros.d; [ -d $d ] || d=%{_sysconfdir}/rpm; echo $d)
+%global macrosdir       %(d=%{_rpmconfigdir}/macros.d; [ -d $d ] || d=%{?scl:%{_root_sysconfdir}}%{!?scl:%{_sysconfdir}}/rpm; echo $d)
 
 %global rrcdir          %_libexecdir
 
 Summary: Multilib packaging helpers
 Name: %{?scl_prefix}multilib-rpm-config
 Version: 1
-Release: 8%{?dist}
+Release: 10%{?dist}
 License: GPLv2+
 URL: https://fedoraproject.org/wiki/PackagingDrafts/MultilibTricks
 
@@ -118,6 +118,12 @@ test `$capable --arch ppc64p7` = true
 %{macrosdir}/*
 
 %changelog
+* Fri Jul 15 2016 Honza Horak <hhorak@redhat.com> - 1-10
+- Fix rpm macros path specification
+
+* Fri Jul 15 2016 Honza Horak <hhorak@redhat.com> - 1-9
+- Use non-prefixed path for RPM macros
+
 * Fri Jul 15 2016 Honza Horak <hhorak@redhat.com> - 1-8
 - Move license macro definition after License tag
 
